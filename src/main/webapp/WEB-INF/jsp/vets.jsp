@@ -5,19 +5,17 @@
 
 <html lang="en">
 
-<jsp:include page="header.jsp"/>
 
 <body>
-	<div id="header">
+	<div class="container">
+		<jsp:include page="header.jsp"/>
+		
 		<spring:url value="/resources/images/banner-graphic.png" var="banner"/>
 		<img src="${banner}" />
-	</div>
-	
-  	<div id="main">
 
-		<h2>Veterinarians:</h2>
+		<h2>Veterinarians</h2>
 		
-			<table>
+			<table class="table table-stripped" style="width:600px;">
 			  <thead>
 			  	<tr>
 				    <th>Name</th>
@@ -46,8 +44,8 @@
 			  </tr>
 			</table>
 	
+			<jsp:include page="footer.jsp"/>
 	  	</div>
-		<jsp:include page="footer.jsp"/>
 	</body>
 
 </html>

@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.hibernate;
+package org.springframework.samples.petclinic.jdbc;
 
 import org.junit.runner.RunWith;
 import org.springframework.samples.petclinic.AbstractClinicTests;
@@ -8,18 +8,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * <p>
- * Integration tests for the {@link HibernateClinic} implementation.
+ * Integration tests for the {@link JdbcClinic} implementation.
  * </p>
  * <p>
- * "HibernateClinicTests-context.xml" determines the actual beans to test.
+ * "JdbcClinicTests-context.xml" determines the actual beans to test.
  * </p>
  *
- * @author Juergen Hoeller
- * @author Sam Brannen
+ * @author Thomas Risberg
  */
-@ContextConfiguration
-@DirtiesContext
+@ContextConfiguration(locations={"classpath:spring/applicationContext-jdbc.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class HibernateClinicTests extends AbstractClinicTests {
+@DirtiesContext
+public class JdbcClinicTests extends AbstractClinicTests {
+	
+	
 
 }

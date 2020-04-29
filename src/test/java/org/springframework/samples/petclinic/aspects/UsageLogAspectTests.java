@@ -1,11 +1,13 @@
-package org.springframework.samples.petclinic.jpa;
+package org.springframework.samples.petclinic.aspects;
 
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.aspects.UsageLogAspect;
+import org.springframework.samples.petclinic.jpa.JpaClinicTests;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static junit.framework.Assert.assertTrue;
@@ -24,28 +26,30 @@ import static junit.framework.Assert.assertFalse;
  * @author Rod Johnson
  * @author Juergen Hoeller
  */
-@ContextConfiguration(locations={"applicationContext-jpaCommon.xml", "applicationContext-hibernateAdapter.xml",
-			"applicationContext-entityManager.xml"})
+@ContextConfiguration(locations={"classpath:spring/applicationContext-jpa.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class EntityManagerClinicTests extends AbstractJpaClinicTests {
+public class UsageLogAspectTests {
 
 	@Autowired
 	private UsageLogAspect usageLogAspect;
+	
+	@Autowired
+	private Clinic clinic;
 
 
 	@Test
 	public void testUsageLogAspectIsInvoked() {
-		String name1 = "Schuurman";
-		String name2 = "Greenwood";
-		String name3 = "Leau";
+		String lastName1 = "Franklin";
+		String lastName2 = "Davis";
+		String lastName3 = "foo";
 
-		assertTrue(this.clinic.findOwners(name1).isEmpty());
-		assertTrue(this.clinic.findOwners(name2).isEmpty());
+		assertFalse(this.clinic.findOwners(lastName1).isEmpty());
+		assertFalse(this.clinic.findOwners(lastName2).isEmpty());
 
 		List<String> namesRequested = this.usageLogAspect.getNamesRequested();
-		assertTrue(namesRequested.contains(name1));
-		assertTrue(namesRequested.contains(name2));
-		assertFalse(namesRequested.contains(name3));
+		assertTrue(namesRequested.contains(lastName1));
+		assertTrue(namesRequested.contains(lastName2));
+		assertFalse(namesRequested.contains(lastName3));
 	}
 
 }

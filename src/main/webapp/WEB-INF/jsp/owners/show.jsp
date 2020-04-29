@@ -3,21 +3,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
 
 <jsp:include page="../header.jsp"/>
 
 <body>
 
-	<div id="header">
+	<div class="container">
 		<spring:url value="/resources/images/banner-graphic.png" var="banner"/>
 		<img src="${banner}" />
-	</div>
-  <div id="main">
   
-	<h2>Owner Information</h2>
+		<h2>Owner Information</h2>
 	
-	  <table>
+	  <table class="table table-striped"  style="width:600px;">
 	    <tr>
 	      <th>Name</th>
 	      <td><b>${owner.firstName} ${owner.lastName}</b></td>
@@ -55,7 +53,7 @@
 	  <h2>Pets and Visits</h2>
 	
 	  <c:forEach var="pet" items="${owner.pets}">
-	    <table width="94%">
+	    <table class="table" style="width:600px;">
 	      <tr>
 	        <td valign="top">
 	          <table>
@@ -94,7 +92,7 @@
 	    <table class="table-buttons">
 	      <tr>
 	        <td>
-	          <spring:url value="{ownerId}/pets/{petId}/edit" var="petUrl">
+	          <spring:url value="/owners/{ownerId}/pets/{petId}/edit" var="petUrl">
 	            <spring:param name="ownerId" value="${owner.id}"/>
 	            <spring:param name="petId" value="${pet.id}"/>
 	          </spring:url>
@@ -102,7 +100,7 @@
 	        </td>
 	        <td></td>
 	        <td>
-	          <spring:url value="{ownerId}/pets/{petId}/visits/new" var="visitUrl">
+	          <spring:url value="/owners/{ownerId}/pets/{petId}/visits/new" var="visitUrl">
 	            <spring:param name="ownerId" value="${owner.id}"/>
 	            <spring:param name="petId" value="${pet.id}"/>
 	          </spring:url>
@@ -110,7 +108,7 @@
 	        </td>
 	        <td></td>
 	        <td>
-	          <spring:url value="{ownerId}/pets/{petId}/visits.atom" var="feedUrl">
+	          <spring:url value="/owners/{ownerId}/pets/{petId}/visits.atom" var="feedUrl">
 	            <spring:param name="ownerId" value="${owner.id}"/>
 	            <spring:param name="petId" value="${pet.id}"/>
 	          </spring:url>
@@ -119,10 +117,11 @@
 	      </tr>
 	    </table>
 	  </c:forEach>
+	  
+	  <jsp:include page="../footer.jsp"/>
   
   	</div>
 
-	<jsp:include page="../footer.jsp"/>
 </body>
 
 </html>
