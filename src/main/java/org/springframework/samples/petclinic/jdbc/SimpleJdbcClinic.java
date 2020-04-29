@@ -8,9 +8,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,7 +18,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.orm.ObjectRetrievalFailureException;
@@ -57,9 +56,9 @@ import org.springframework.transaction.annotation.Transactional;
 @ManagedResource("petclinic:type=Clinic")
 public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private SimpleJdbcTemplate simpleJdbcTemplate;
+	private JdbcTemplate simpleJdbcTemplate;
 
 	private SimpleJdbcInsert insertOwner;
 	private SimpleJdbcInsert insertPet;
@@ -70,7 +69,7 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
 
 	@Autowired
 	public void init(DataSource dataSource) {
-		this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+		this.simpleJdbcTemplate = new JdbcTemplate(dataSource);
 
 		this.insertOwner = new SimpleJdbcInsert(dataSource)
 			.withTableName("owners")

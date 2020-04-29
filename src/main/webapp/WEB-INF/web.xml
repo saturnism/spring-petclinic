@@ -45,8 +45,10 @@
 
 		<!--
 			To use the JPA variant above, you will need to enable Spring load-time
-			weaving in your server environment. See PetClinic's readme and/or
-			Spring's JPA documentation for information on how to do this.
+			weaving in your server environment. Out of the box, Spring will try to
+			detect the running environment and use the appropriate weaver but if that
+			fails, one must enable one by hand or use the VM-wide weaver.
+			See PetClinic's readme and/or Spring's JPA documentation for more information.
 		-->
 	</context-param>
 
@@ -145,25 +147,25 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-    <filter>
-        <filter-name>httpMethodFilter</filter-name>
-        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-    </filter>
+	<filter>
+		<filter-name>httpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
 
-    <filter-mapping>
-        <filter-name>httpMethodFilter</filter-name>
-        <servlet-name>petclinic</servlet-name>
-    </filter-mapping>
-    
+	<filter-mapping>
+		<filter-name>httpMethodFilter</filter-name>
+		<servlet-name>petclinic</servlet-name>
+	</filter-mapping>
+
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>
 
-	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<!-- Displays a stack trace -->
-		<location>/WEB-INF/jsp/uncaughtException.jsp</location>
-	</error-page>
+	<!-- eliminate welcome files -->
+	<!-- useful for Servlet 3 container (Tomcat 7 and Jetty 6) -->
+	<welcome-file-list>
+		<welcome-file></welcome-file>
+	</welcome-file-list>
 
 	<!--
 		- Reference to PetClinic database.
